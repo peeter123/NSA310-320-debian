@@ -19,5 +19,6 @@ obj-$(CONFIG_MACH_NET2BIG_V2)		+= netxbig_v2-setup.o lacie_v2-common.o
 obj-$(CONFIG_MACH_NET5BIG_V2)		+= netxbig_v2-setup.o lacie_v2-common.o
 obj-$(CONFIG_MACH_T5325)		+= t5325-setup.o
 obj-$(CONFIG_MACH_NSA320)		+= nsa320-setup.o mcu.o
+obj-$(CONFIG_MACH_NSA310)		+= nsa310-setup.o mcu.o
 
 obj-$(CONFIG_CPU_IDLE)			+= cpuidle.o
