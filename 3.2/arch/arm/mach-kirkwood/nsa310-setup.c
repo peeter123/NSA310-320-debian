@@ -1,6 +1,4 @@
-/*
- * arch/arm/mach-kirkwood/nsa310-setup.c
- *
+ /*
  * Zyxel NSA-310 Setup, by AA666 and Peeter123
  *
  * This file is licensed under the terms of the GNU General Public
@@ -18,7 +16,6 @@
 #include <linux/mtd/partitions.h>
 #include <mtd/mtd-abi.h>
 #include <linux/ata_platform.h>
-#include <linux/mv643xx_eth.h>
 #include <linux/mv643xx_i2c.h>
 #include <linux/ethtool.h>
 #include <linux/gpio.h>
@@ -75,16 +72,6 @@ static struct mtd_partition nsa310_nand_parts[] = {
 		.offset = MTDPART_OFS_NXTBLK,
 		.size = 0x2FC0000
 	},
-};
-
-static struct i2c_board_info __initdata nsa310_i2c_rtc = {
-        I2C_BOARD_INFO("pcf8563", 0x51),
-};
-
-static struct mv643xx_eth_platform_data nsa310_ge00_data = {
-	.phy_addr	= MV643XX_ETH_PHY_ADDR(0),
-	.speed		= SPEED_1000,
-	.duplex		= DUPLEX_FULL,
 };
 
 static struct mv_sata_platform_data nsa310_sata_data = {
@@ -261,7 +248,7 @@ static void nsa310_power_off(void)
 {
 //
 //don't work with sysfs
-    	printk(KERN_INFO "Activating power off GPIO pin...\n");
+    	printk(KERN_INFO "NSA310: Activating power off GPIO pin...\n");
 	gpio_set_value(48, 1);
 
 // If machine goes to restart, uncomment next lines for infinite loop
@@ -277,9 +264,9 @@ static void nsa310_timerfunc(unsigned long data)
 {
 // Activate USB Power
 	if (gpio_request(21, "USB Power") != 0 || gpio_direction_output(21, 1) != 0)
-	    printk(KERN_ERR "failed to setup USB power GPIO\n");
+	    printk(KERN_ERR "NSA310: Failed to setup USB power GPIO\n");
 	else
-    	    printk(KERN_INFO "USB power enabled\n");
+    	    printk(KERN_INFO "NSA310: USB power enabled\n");
 	gpio_free(21);
 }
 
@@ -290,14 +277,12 @@ static void __init nsa310_init(void)
 	kirkwood_init();
 
 	kirkwood_mpp_conf(nsa310_mpp_config);
-	kirkwood_nand_init(ARRAY_AND_SIZE(nsa310_nand_parts), 25);
-	kirkwood_ge00_init(&nsa310_ge00_data);
+	kirkwood_nand_init(ARRAY_AND_SIZE(nsa310_nand_parts), 40);
 	kirkwood_pcie_id(&dev, &rev);
 
 	kirkwood_sata_init(&nsa310_sata_data);
 	kirkwood_uart0_init();
 	kirkwood_i2c_init();
-        i2c_register_board_info(0, &nsa310_i2c_rtc, 1);
 
 	platform_device_register(&nsa310_leds);
 	platform_device_register(&nsa310_buttons);
@@ -325,16 +310,16 @@ static void __init nsa310_init(void)
 //test
 	    gpio_free(47);
 	    gpio_free(49);
-    	    printk(KERN_INFO "Power resume enabled\n");
+    	    printk(KERN_INFO "NSA310: Power resume enabled\n");
 
 
 // Activate Power-off GPIO
 	if (gpio_request(48, "Power-off") == 0 && gpio_direction_output(48, 0) == 0) {
 //    	    gpio_free(48);
             pm_power_off = nsa310_power_off;
-    	    printk(KERN_INFO "Power-off GPIO enabled\n");
+    	    printk(KERN_INFO "NSA310: Power-off GPIO enabled\n");
     	} else
-		printk(KERN_ERR "failed to configure Power-off GPIO\n");
+		printk(KERN_ERR "NSA310: Failed to configure Power-off GPIO\n");
 
 };
 
@@ -351,7 +336,8 @@ MACHINE_START(NSA310, "Zyxel NSA-310")
 	.atag_offset	= 0x100,
 	.init_machine	= nsa310_init,
 	.map_io		= kirkwood_map_io,
-	.init_early		= kirkwood_init_early,
-	.init_irq		= kirkwood_init_irq,
+	.init_early	= kirkwood_init_early,
+	.init_irq	= kirkwood_init_irq,
 	.timer		= &kirkwood_timer,
 MACHINE_END
+

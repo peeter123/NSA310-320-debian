@@ -1,7 +1,5 @@
-/*
- * arch/arm/mach-kirkwood/nsa320-setup.c
- *
- * Zyxel NSA-320 Setup, by AA666
+ /*
+ * Zyxel NSA-310 Setup, by AA666 and Peeter123
  *
  * This file is licensed under the terms of the GNU General Public
  * License version 2.  This program is licensed "as is" without any
@@ -18,7 +16,6 @@
 #include <linux/mtd/partitions.h>
 #include <mtd/mtd-abi.h>
 #include <linux/ata_platform.h>
-#include <linux/mv643xx_eth.h>
 #include <linux/mv643xx_i2c.h>
 #include <linux/ethtool.h>
 #include <linux/gpio.h>
@@ -33,10 +30,10 @@
 #include <linux/timer.h>
 #include <linux/jiffies.h>
 
-static void nsa320_timerfunc(unsigned long data);
-static DEFINE_TIMER(timer, nsa320_timerfunc, 0, 0);
+static void nsa310_timerfunc(unsigned long data);
+static DEFINE_TIMER(timer, nsa310_timerfunc, 0, 0);
 
-static struct mtd_partition nsa320_nand_parts[] = {
+static struct mtd_partition nsa310_nand_parts[] = {
 	{
 		.name = "uboot",
 		.offset = 0,
@@ -77,21 +74,11 @@ static struct mtd_partition nsa320_nand_parts[] = {
 	},
 };
 
-static struct i2c_board_info __initdata nsa320_i2c_rtc = {
-        I2C_BOARD_INFO("pcf8563", 0x51),
-};
-
-static struct mv643xx_eth_platform_data nsa320_ge00_data = {
-	.phy_addr	= MV643XX_ETH_PHY_ADDR(0),
-	.speed		= SPEED_1000,
-	.duplex		= DUPLEX_FULL,
-};
-
-static struct mv_sata_platform_data nsa320_sata_data = {
+static struct mv_sata_platform_data nsa310_sata_data = {
 	.n_ports	= 2,
 };
 
-static unsigned int nsa320_mpp_config[] __initdata = {
+static unsigned int nsa310_mpp_config[] __initdata = {
 	MPP36_GPIO, // Reset button
 	MPP37_GPIO, // Copy button
 	MPP46_GPIO, // Power button
@@ -125,58 +112,58 @@ static unsigned int nsa320_mpp_config[] __initdata = {
 	0
 };
 
-static struct gpio_led nsa320_gpio_led[] = {
+static struct gpio_led nsa310_gpio_led[] = {
         {
-            .name		= "nsa320:green:System",
+            .name		= "nsa310:green:System",
             .default_trigger	= "timer",
             .gpio		= 28,
             .active_low		= 0,
 
         },
 	{
-            .name		= "nsa320:red:System",
+            .name		= "nsa310:red:System",
             .default_trigger	= "none",
             .gpio		= 29,
             .active_low		= 0,
         },
 	{
-            .name		= "nsa320:green:SATA1",
+            .name		= "nsa310:green:SATA1",
             .default_trigger	= "none",
             .gpio		= 41,
             .active_low		= 0,
         },
 	{
-            .name		= "nsa320:red:SATA1",
+            .name		= "nsa310:red:SATA1",
             .default_trigger	= "sata-disk",
             .gpio		= 42,
             .active_low		= 0,
         },
 	{
-            .name		= "nsa320:green:SATA2",
+            .name		= "nsa310:green:SATA2",
             .default_trigger	= "none",
             .gpio		= 12,
             .active_low		= 0,
         },
 	{
-            .name		= "nsa320:red:SATA2",
+            .name		= "nsa310:red:SATA2",
             .default_trigger	= "none",
             .gpio		= 13,
             .active_low		= 0,
         },
 	{
-            .name		= "nsa320:green:USB",
+            .name		= "nsa310:green:USB",
             .default_trigger	= "none",
             .gpio		= 15,
             .active_low		= 0,
         },
         {
-            .name		= "nsa320:green:Copy",
+            .name		= "nsa310:green:Copy",
             .default_trigger	= "none",
             .gpio		= 39,
             .active_low		= 0,
         },
 	{
-            .name		= "nsa320:red:Copy",
+            .name		= "nsa310:red:Copy",
             .default_trigger	= "none",
             .gpio		= 40,
             .active_low		= 0,
@@ -184,7 +171,7 @@ static struct gpio_led nsa320_gpio_led[] = {
 };
 
 
-static int nsa320_gpio_blink_set(unsigned gpio, int state,
+static int nsa310_gpio_blink_set(unsigned gpio, int state,
 	unsigned long *delay_on, unsigned long *delay_off)
 {
 
@@ -206,19 +193,19 @@ static int nsa320_gpio_blink_set(unsigned gpio, int state,
 }
 
 
-static struct gpio_led_platform_data nsa320_led_data = {
-        .leds           = nsa320_gpio_led,
-        .num_leds       = ARRAY_SIZE(nsa320_gpio_led),
-	.gpio_blink_set	= nsa320_gpio_blink_set,
+static struct gpio_led_platform_data nsa310_led_data = {
+        .leds           = nsa310_gpio_led,
+        .num_leds       = ARRAY_SIZE(nsa310_gpio_led),
+	.gpio_blink_set	= nsa310_gpio_blink_set,
 };
 
-static struct platform_device nsa320_leds = {
+static struct platform_device nsa310_leds = {
         .name   = "leds-gpio",
         .id     = -1,
-        .dev    = { .platform_data  = &nsa320_led_data, }
+        .dev    = { .platform_data  = &nsa310_led_data, }
 };
 
-static struct gpio_keys_button nsa320_gpio_keys_button[] = {
+static struct gpio_keys_button nsa310_gpio_keys_button[] = {
         {
             .code           	= KEY_POWER,
             .type		= EV_KEY,
@@ -245,22 +232,23 @@ static struct gpio_keys_button nsa320_gpio_keys_button[] = {
         },
 };
 
-static struct gpio_keys_platform_data nsa320_keys_data = {
-        .buttons        = nsa320_gpio_keys_button,
-        .nbuttons       = ARRAY_SIZE(nsa320_gpio_keys_button),
+static struct gpio_keys_platform_data nsa310_keys_data = {
+        .buttons        = nsa310_gpio_keys_button,
+        .nbuttons       = ARRAY_SIZE(nsa310_gpio_keys_button),
 };
 
-static struct platform_device nsa320_buttons = {
+
+static struct platform_device nsa310_buttons = {
         .name           = "gpio-keys",
         .id             = -1,
-        .dev            = { .platform_data  = &nsa320_keys_data, }
+        .dev            = { .platform_data  = &nsa310_keys_data, }
 };
 
-static void nsa320_power_off(void)
+static void nsa310_power_off(void)
 {
 //
 //don't work with sysfs
-    	printk(KERN_INFO "Activating power off GPIO pin...\n");
+    	printk(KERN_INFO "NSA310: Activating power off GPIO pin...\n");
 	gpio_set_value(48, 1);
 
 // If machine goes to restart, uncomment next lines for infinite loop
@@ -272,38 +260,36 @@ static void nsa320_power_off(void)
 */
 }
 
-static void nsa320_timerfunc(unsigned long data)
+static void nsa310_timerfunc(unsigned long data)
 {
 // Activate USB Power
 	if (gpio_request(21, "USB Power") != 0 || gpio_direction_output(21, 1) != 0)
-	    printk(KERN_ERR "failed to setup USB power GPIO\n");
+	    printk(KERN_ERR "NSA310: Failed to setup USB power GPIO\n");
 	else
-    	    printk(KERN_INFO "USB power enabled\n");
+    	    printk(KERN_INFO "NSA310: USB power enabled\n");
 	gpio_free(21);
 }
 
-static void __init nsa320_init(void)
+static void __init nsa310_init(void)
 {
 	u32 dev, rev;
 
 	kirkwood_init();
 
-	kirkwood_mpp_conf(nsa320_mpp_config);
-	kirkwood_nand_init(ARRAY_AND_SIZE(nsa320_nand_parts), 25);
-	kirkwood_ge00_init(&nsa320_ge00_data);
+	kirkwood_mpp_conf(nsa310_mpp_config);
+	kirkwood_nand_init(ARRAY_AND_SIZE(nsa310_nand_parts), 40);
 	kirkwood_pcie_id(&dev, &rev);
 
-	kirkwood_sata_init(&nsa320_sata_data);
+	kirkwood_sata_init(&nsa310_sata_data);
 	kirkwood_uart0_init();
 	kirkwood_i2c_init();
-        i2c_register_board_info(0, &nsa320_i2c_rtc, 1);
 
-	platform_device_register(&nsa320_leds);
-	platform_device_register(&nsa320_buttons);
+	platform_device_register(&nsa310_leds);
+	platform_device_register(&nsa310_buttons);
 	
 	kirkwood_ehci_init();
 //	USB Power delay for 20 sec	
-	timer.function = nsa320_timerfunc;
+	timer.function = nsa310_timerfunc;
         timer.data = 0;
 	timer.expires = jiffies + msecs_to_jiffies(20000);
 	add_timer(&timer);
@@ -324,33 +310,34 @@ static void __init nsa320_init(void)
 //test
 	    gpio_free(47);
 	    gpio_free(49);
-    	    printk(KERN_INFO "Power resume enabled\n");
+    	    printk(KERN_INFO "NSA310: Power resume enabled\n");
 
 
 // Activate Power-off GPIO
 	if (gpio_request(48, "Power-off") == 0 && gpio_direction_output(48, 0) == 0) {
 //    	    gpio_free(48);
-            pm_power_off = nsa320_power_off;
-    	    printk(KERN_INFO "Power-off GPIO enabled\n");
+            pm_power_off = nsa310_power_off;
+    	    printk(KERN_INFO "NSA310: Power-off GPIO enabled\n");
     	} else
-		printk(KERN_ERR "failed to configure Power-off GPIO\n");
+		printk(KERN_ERR "NSA310: Failed to configure Power-off GPIO\n");
 
 };
 
-static int __init nsa320_pci_init(void)
+static int __init nsa310_pci_init(void)
 {
-	if (machine_is_nsa320())
+	if (machine_is_nsa310())
 		kirkwood_pcie_init(KW_PCIE0);
 	return 0;
 }
 
-subsys_initcall(nsa320_pci_init);
+subsys_initcall(nsa310_pci_init);
 
-MACHINE_START(NSA320, "Zyxel NSA-320")
+MACHINE_START(NSA310, "Zyxel NSA-310")
 	.atag_offset	= 0x100,
-	.init_machine	= nsa320_init,
+	.init_machine	= nsa310_init,
 	.map_io		= kirkwood_map_io,
-	.init_early		= kirkwood_init_early,
-	.init_irq		= kirkwood_init_irq,
+	.init_early	= kirkwood_init_early,
+	.init_irq	= kirkwood_init_irq,
 	.timer		= &kirkwood_timer,
 MACHINE_END
+
