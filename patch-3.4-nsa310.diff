@@ -1,7 +1,7 @@
-diff -uNr linux-3.3.6/arch/arm/mach-kirkwood/Kconfig linux-3.3.6-my/arch/arm/mach-kirkwood/Kconfig
---- linux-3.3.6/arch/arm/mach-kirkwood/Kconfig	2012-05-12 19:08:37.000000000 +0200
-+++ linux-3.3.6-my/arch/arm/mach-kirkwood/Kconfig	2012-05-17 14:03:39.269421542 +0200
-@@ -130,6 +130,18 @@
+diff -uNr linux-3.4/arch/arm/mach-kirkwood/Kconfig linux-3.4-my/arch/arm/mach-kirkwood/Kconfig
+--- linux-3.4/arch/arm/mach-kirkwood/Kconfig	2012-05-21 00:29:13.000000000 +0200
++++ linux-3.4-my/arch/arm/mach-kirkwood/Kconfig	2012-05-27 20:46:10.816306442 +0200
+@@ -144,6 +144,18 @@
  	  Say 'Y' here if you want your kernel to support the
  	  HP t5325 Thin Client.
  
@@ -20,10 +20,10 @@ diff -uNr linux-3.3.6/arch/arm/mach-kirkwood/Kconfig linux-3.3.6-my/arch/arm/mac
  endmenu
  
  endif
-diff -uNr linux-3.3.6/arch/arm/mach-kirkwood/Makefile linux-3.3.6-my/arch/arm/mach-kirkwood/Makefile
---- linux-3.3.6/arch/arm/mach-kirkwood/Makefile	2012-05-12 19:08:37.000000000 +0200
-+++ linux-3.3.6-my/arch/arm/mach-kirkwood/Makefile	2012-05-17 14:03:39.277422004 +0200
-@@ -18,5 +18,7 @@
+diff -uNr linux-3.4/arch/arm/mach-kirkwood/Makefile linux-3.4-my/arch/arm/mach-kirkwood/Makefile
+--- linux-3.4/arch/arm/mach-kirkwood/Makefile	2012-05-21 00:29:13.000000000 +0200
++++ linux-3.4-my/arch/arm/mach-kirkwood/Makefile	2012-05-27 20:46:10.840306505 +0200
+@@ -18,6 +18,8 @@
  obj-$(CONFIG_MACH_NET2BIG_V2)		+= netxbig_v2-setup.o lacie_v2-common.o
  obj-$(CONFIG_MACH_NET5BIG_V2)		+= netxbig_v2-setup.o lacie_v2-common.o
  obj-$(CONFIG_MACH_T5325)		+= t5325-setup.o
@@ -31,9 +31,10 @@ diff -uNr linux-3.3.6/arch/arm/mach-kirkwood/Makefile linux-3.3.6-my/arch/arm/ma
 +obj-$(CONFIG_MACH_NSA310)		+= nsa310-setup.o mcu.o
  
  obj-$(CONFIG_CPU_IDLE)			+= cpuidle.o
-diff -uNr linux-3.3.6/arch/arm/mach-kirkwood/mcu.c linux-3.3.6-my/arch/arm/mach-kirkwood/mcu.c
---- linux-3.3.6/arch/arm/mach-kirkwood/mcu.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-3.3.6-my/arch/arm/mach-kirkwood/mcu.c	2012-05-17 14:03:39.277422004 +0200
+ obj-$(CONFIG_ARCH_KIRKWOOD_DT)		+= board-dt.o
+diff -uNr linux-3.4/arch/arm/mach-kirkwood/mcu.c linux-3.4-my/arch/arm/mach-kirkwood/mcu.c
+--- linux-3.4/arch/arm/mach-kirkwood/mcu.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-3.4-my/arch/arm/mach-kirkwood/mcu.c	2012-05-27 20:46:10.840306505 +0200
 @@ -0,0 +1,125 @@
 +#include <linux/module.h>
 +#include <linux/init.h>
@@ -160,9 +161,9 @@ diff -uNr linux-3.3.6/arch/arm/mach-kirkwood/mcu.c linux-3.3.6-my/arch/arm/mach-
 +module_init(mcu_init);
 +module_exit(mcu_exit);
 +
-diff -uNr linux-3.3.6/arch/arm/mach-kirkwood/nsa310-setup.c linux-3.3.6-my/arch/arm/mach-kirkwood/nsa310-setup.c
---- linux-3.3.6/arch/arm/mach-kirkwood/nsa310-setup.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-3.3.6-my/arch/arm/mach-kirkwood/nsa310-setup.c	2012-05-17 14:03:39.293421691 +0200
+diff -uNr linux-3.4/arch/arm/mach-kirkwood/nsa310-setup.c linux-3.4-my/arch/arm/mach-kirkwood/nsa310-setup.c
+--- linux-3.4/arch/arm/mach-kirkwood/nsa310-setup.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-3.4-my/arch/arm/mach-kirkwood/nsa310-setup.c	2012-05-27 20:46:10.844306496 +0200
 @@ -0,0 +1,343 @@
 + /*
 + * Zyxel NSA-310 Setup, by AA666 and Peeter123
@@ -507,9 +508,9 @@ diff -uNr linux-3.3.6/arch/arm/mach-kirkwood/nsa310-setup.c linux-3.3.6-my/arch/
 +	.timer		= &kirkwood_timer,
 +MACHINE_END
 +
-diff -uNr linux-3.3.6/arch/arm/mach-kirkwood/nsa320-setup.c linux-3.3.6-my/arch/arm/mach-kirkwood/nsa320-setup.c
---- linux-3.3.6/arch/arm/mach-kirkwood/nsa320-setup.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-3.3.6-my/arch/arm/mach-kirkwood/nsa320-setup.c	2012-05-17 14:03:39.297421609 +0200
+diff -uNr linux-3.4/arch/arm/mach-kirkwood/nsa320-setup.c linux-3.4-my/arch/arm/mach-kirkwood/nsa320-setup.c
+--- linux-3.4/arch/arm/mach-kirkwood/nsa320-setup.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-3.4-my/arch/arm/mach-kirkwood/nsa320-setup.c	2012-05-27 20:46:10.844306496 +0200
 @@ -0,0 +1,356 @@
 +/*
 + * arch/arm/mach-kirkwood/nsa320-setup.c
@@ -867,9 +868,9 @@ diff -uNr linux-3.3.6/arch/arm/mach-kirkwood/nsa320-setup.c linux-3.3.6-my/arch/
 +	.init_irq	= kirkwood_init_irq,
 +	.timer		= &kirkwood_timer,
 +MACHINE_END
-diff -uNr linux-3.3.6/arch/arm/tools/mach-types linux-3.3.6-my/arch/arm/tools/mach-types
---- linux-3.3.6/arch/arm/tools/mach-types	2012-05-12 19:08:37.000000000 +0200
-+++ linux-3.3.6-my/arch/arm/tools/mach-types	2012-05-17 14:03:14.185425517 +0200
+diff -uNr linux-3.4/arch/arm/tools/mach-types linux-3.4-my/arch/arm/tools/mach-types
+--- linux-3.4/arch/arm/tools/mach-types	2012-05-21 00:29:13.000000000 +0200
++++ linux-3.4-my/arch/arm/tools/mach-types	2012-05-27 20:46:10.884306489 +0200
 @@ -12,531 +12,3179 @@
  #
  #   http://www.arm.linux.org.uk/developer/machines/?action=new
@@ -4542,9 +4543,9 @@ diff -uNr linux-3.3.6/arch/arm/tools/mach-types linux-3.3.6-my/arch/arm/tools/ma
 +cp2dtg			MACH_CP2DTG		CP2DTG			4204
 +cp2dug			MACH_CP2DUG		CP2DUG			4205
 +
-diff -uNr linux-3.3.6/drivers/ata/sata_mv.c linux-3.3.6-my/drivers/ata/sata_mv.c
---- linux-3.3.6/drivers/ata/sata_mv.c	2012-05-12 19:08:37.000000000 +0200
-+++ linux-3.3.6-my/drivers/ata/sata_mv.c	2012-05-17 14:03:39.297421609 +0200
+diff -uNr linux-3.4/drivers/ata/sata_mv.c linux-3.4-my/drivers/ata/sata_mv.c
+--- linux-3.4/drivers/ata/sata_mv.c	2012-05-21 00:29:13.000000000 +0200
++++ linux-3.4-my/drivers/ata/sata_mv.c	2012-05-27 20:46:10.912306514 +0200
 @@ -69,6 +69,7 @@
  #include <scsi/scsi_cmnd.h>
  #include <scsi/scsi_device.h>
@@ -4562,10 +4563,10 @@ diff -uNr linux-3.3.6/drivers/ata/sata_mv.c linux-3.3.6-my/drivers/ata/sata_mv.c
  	if (pp->pp_flags & MV_PP_FLAG_EDMA_EN) {
  		int using_ncq = ((pp->pp_flags & MV_PP_FLAG_NCQ_EN) != 0);
  		if (want_ncq != using_ncq)
-diff -uNr linux-3.3.6/drivers/i2c/busses/i2c-mv64xxx.c linux-3.3.6-my/drivers/i2c/busses/i2c-mv64xxx.c
---- linux-3.3.6/drivers/i2c/busses/i2c-mv64xxx.c	2012-05-12 19:08:37.000000000 +0200
-+++ linux-3.3.6-my/drivers/i2c/busses/i2c-mv64xxx.c	2012-05-17 14:09:46.261372494 +0200
-@@ -59,7 +58,6 @@
+diff -uNr linux-3.4/drivers/i2c/busses/i2c-mv64xxx.c linux-3.4-my/drivers/i2c/busses/i2c-mv64xxx.c
+--- linux-3.4/drivers/i2c/busses/i2c-mv64xxx.c	2012-05-21 00:29:13.000000000 +0200
++++ linux-3.4-my/drivers/i2c/busses/i2c-mv64xxx.c	2012-05-27 20:46:10.932306531 +0200
+@@ -59,7 +59,6 @@
  	MV64XXX_I2C_STATE_INVALID,
  	MV64XXX_I2C_STATE_IDLE,
  	MV64XXX_I2C_STATE_WAITING_FOR_START_COND,
@@ -4573,7 +4574,7 @@ diff -uNr linux-3.3.6/drivers/i2c/busses/i2c-mv64xxx.c linux-3.3.6-my/drivers/i2
  	MV64XXX_I2C_STATE_WAITING_FOR_ADDR_1_ACK,
  	MV64XXX_I2C_STATE_WAITING_FOR_ADDR_2_ACK,
  	MV64XXX_I2C_STATE_WAITING_FOR_SLAVE_ACK,
-@@ -71,7 +69,6 @@
+@@ -71,7 +70,6 @@
  	MV64XXX_I2C_ACTION_INVALID,
  	MV64XXX_I2C_ACTION_CONTINUE,
  	MV64XXX_I2C_ACTION_SEND_START,
@@ -4581,7 +4582,7 @@ diff -uNr linux-3.3.6/drivers/i2c/busses/i2c-mv64xxx.c linux-3.3.6-my/drivers/i2
  	MV64XXX_I2C_ACTION_SEND_ADDR_1,
  	MV64XXX_I2C_ACTION_SEND_ADDR_2,
  	MV64XXX_I2C_ACTION_SEND_DATA,
-@@ -93,7 +90,6 @@
+@@ -93,7 +91,6 @@
  	u32			addr2;
  	u32			bytes_left;
  	u32			byte_posn;
@@ -4589,7 +4590,7 @@ diff -uNr linux-3.3.6/drivers/i2c/busses/i2c-mv64xxx.c linux-3.3.6-my/drivers/i2
  	u32			block;
  	int			rc;
  	u32			freq_m;
-@@ -162,15 +158,8 @@
+@@ -162,15 +159,8 @@
  		if ((drv_data->bytes_left == 0)
  				|| (drv_data->aborting
  					&& (drv_data->byte_posn != 0))) {
@@ -4607,7 +4608,7 @@ diff -uNr linux-3.3.6/drivers/i2c/busses/i2c-mv64xxx.c linux-3.3.6-my/drivers/i2
  		} else {
  			drv_data->action = MV64XXX_I2C_ACTION_SEND_DATA;
  			drv_data->state =
-@@ -238,15 +227,6 @@
+@@ -238,15 +228,6 @@
  mv64xxx_i2c_do_action(struct mv64xxx_i2c_data *drv_data)
  {
  	switch(drv_data->action) {
@@ -4623,7 +4624,7 @@ diff -uNr linux-3.3.6/drivers/i2c/busses/i2c-mv64xxx.c linux-3.3.6-my/drivers/i2
  	case MV64XXX_I2C_ACTION_CONTINUE:
  		writel(drv_data->cntl_bits,
  			drv_data->reg_base + MV64XXX_I2C_REG_CONTROL);
-@@ -405,8 +385,7 @@
+@@ -405,8 +386,7 @@
  }
  
  static int
@@ -4633,7 +4634,7 @@ diff -uNr linux-3.3.6/drivers/i2c/busses/i2c-mv64xxx.c linux-3.3.6-my/drivers/i2
  {
  	unsigned long	flags;
  
-@@ -426,18 +405,10 @@
+@@ -426,18 +406,10 @@
  			drv_data->bytes_left--;
  		}
  	} else {
@@ -4654,7 +4655,7 @@ diff -uNr linux-3.3.6/drivers/i2c/busses/i2c-mv64xxx.c linux-3.3.6-my/drivers/i2
  	drv_data->block = 1;
  	mv64xxx_i2c_do_action(drv_data);
  	spin_unlock_irqrestore(&drv_data->lock, flags);
-@@ -465,12 +436,9 @@
+@@ -465,12 +437,9 @@
  	struct mv64xxx_i2c_data *drv_data = i2c_get_adapdata(adap);
  	int	i, rc;
  
@@ -4669,43 +4670,10 @@ diff -uNr linux-3.3.6/drivers/i2c/busses/i2c-mv64xxx.c linux-3.3.6-my/drivers/i2
  
  	return num;
  }
-
-diff -uNr linux-3.3.6/drivers/leds/Kconfig linux-3.3.6-my/drivers/leds/Kconfig
---- linux-3.3.6/drivers/leds/Kconfig	2012-05-12 19:08:37.000000000 +0200
-+++ linux-3.3.6-my/drivers/leds/Kconfig	2012-05-17 14:03:39.309421591 +0200
-@@ -436,6 +436,14 @@
- 	depends on IDE_GD_ATA
- 	depends on LEDS_TRIGGERS
- 	help
-+	  This allows LEDs to be controlled by SATA disk activity.
-+	  If unsure, say Y.
-+
-+config LEDS_TRIGGER_SATA_DISK
-+	bool "LED SATA Disk Trigger"
-+	depends on ATA
-+	depends on LEDS_TRIGGERS
-+	help
- 	  This allows LEDs to be controlled by IDE disk activity.
- 	  If unsure, say Y.
- 
-@@ -477,6 +485,13 @@
- 	  This allows LEDs to be initialised in the ON state.
- 	  If unsure, say Y.
- 
-+config LEDS_TRIGGER_NETDEV 
-+       tristate "LED Netdev Trigger" 
-+       depends on LEDS_TRIGGERS 
-+       help 
-+        This allows LEDs to be controlled by network device activity. 
-+        If unsure, say Y. 
-+
- comment "iptables trigger is under Netfilter config (LED target)"
- 	depends on LEDS_TRIGGERS
- 
-diff -uNr linux-3.3.6/drivers/leds/ledtrig-netdev.c linux-3.3.6-my/drivers/leds/ledtrig-netdev.c
---- linux-3.3.6/drivers/leds/ledtrig-netdev.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-3.3.6-my/drivers/leds/ledtrig-netdev.c	2012-05-17 14:03:39.309421591 +0200
-@@ -0,0 +1,463 @@
+diff -uNr linux-3.4/drivers/leds/ledtrig-netdev.c linux-3.4-my/drivers/leds/ledtrig-netdev.c
+--- linux-3.4/drivers/leds/ledtrig-netdev.c	2012-05-21 00:29:13.231234144 +0200
++++ linux-3.4-my/drivers/leds/ledtrig-netdev.c	2012-05-27 20:53:47.832448610 +0200
+@@ -0,0 +1,462 @@
 +/*
 + * LED Kernel Netdev Trigger
 + *
@@ -5168,125 +5136,32 @@ diff -uNr linux-3.3.6/drivers/leds/ledtrig-netdev.c linux-3.3.6-my/drivers/leds/
 +MODULE_AUTHOR("Oliver Jowett <oliver@opencloud.com>");
 +MODULE_DESCRIPTION("Netdev LED trigger");
 +MODULE_LICENSE("GPL");
-diff -uNr linux-3.3.6/drivers/leds/ledtrig-sata-disk.c linux-3.3.6-my/drivers/leds/ledtrig-sata-disk.c
---- linux-3.3.6/drivers/leds/ledtrig-sata-disk.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-3.3.6-my/drivers/leds/ledtrig-sata-disk.c	2012-05-17 14:03:39.309421591 +0200
-@@ -0,0 +1,64 @@
-+/*
-+ * LED SATA-Disk Activity Trigger
-+ *
-+ * Copyright 2006 Openedhand Ltd.
-+ *
-+ * Author: Richard Purdie <rpurdie@openedhand.com>
-+ *
-+ * This program is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License version 2 as
-+ * published by the Free Software Foundation.
-+ *
-+ */
+diff -uNr linux-3.4/drivers/leds/Kconfig linux-3.4-my/drivers/leds/Kconfig
+--- linux-3.4/drivers/leds/Kconfig	2012-05-21 00:29:13.000000000 +0200
++++ linux-3.4-my/drivers/leds/Kconfig	2012-05-27 20:46:10.952306543 +0200
+@@ -427,6 +427,14 @@
+ 	depends on IDE_GD_ATA
+ 	depends on LEDS_TRIGGERS
+ 	help
++	  This allows LEDs to be controlled by SATA disk activity.
++	  If unsure, say Y.
 +
-+#include <linux/module.h>
-+#include <linux/jiffies.h>
-+#include <linux/kernel.h>
-+#include <linux/init.h>
-+#include <linux/timer.h>
-+#include <linux/leds.h>
-+
-+static void ledtrig_sata_timerfunc(unsigned long data);
-+
-+DEFINE_LED_TRIGGER(ledtrig_sata);
-+static DEFINE_TIMER(ledtrig_sata_timer, ledtrig_sata_timerfunc, 0, 0);
-+static int sata_activity;
-+static int sata_lastactivity;
-+
-+void ledtrig_sata_activity(void)
-+{
-+	sata_activity++;
-+	if (!timer_pending(&ledtrig_sata_timer))
-+		mod_timer(&ledtrig_sata_timer, jiffies + msecs_to_jiffies(10));
-+}
-+EXPORT_SYMBOL(ledtrig_sata_activity);
-+
-+static void ledtrig_sata_timerfunc(unsigned long data)
-+{
-+	if (sata_lastactivity != sata_activity) {
-+		sata_lastactivity = sata_activity;
-+		/* INT_MAX will set each LED to its maximum brightness */
-+		led_trigger_event(ledtrig_sata, INT_MAX);
-+		mod_timer(&ledtrig_sata_timer, jiffies + msecs_to_jiffies(10));
-+	} else {
-+		led_trigger_event(ledtrig_sata, LED_OFF);
-+	}
-+}
-+
-+static int __init ledtrig_sata_init(void)
-+{
-+	led_trigger_register_simple("sata-disk", &ledtrig_sata);
-+	return 0;
-+}
-+
-+static void __exit ledtrig_sata_exit(void)
-+{
-+	led_trigger_unregister_simple(ledtrig_sata);
-+}
-+
-+module_init(ledtrig_sata_init);
-+module_exit(ledtrig_sata_exit);
-+
-+MODULE_AUTHOR("Richard Purdie <rpurdie@openedhand.com>");
-+MODULE_DESCRIPTION("LED IDE Disk Activity Trigger");
-+MODULE_LICENSE("GPL");
-diff -uNr linux-3.3.6/drivers/leds/Makefile linux-3.3.6-my/drivers/leds/Makefile
---- linux-3.3.6/drivers/leds/Makefile	2012-05-12 19:08:37.000000000 +0200
-+++ linux-3.3.6-my/drivers/leds/Makefile	2012-05-17 14:03:39.309421591 +0200
-@@ -53,7 +53,9 @@
- # LED Triggers
- obj-$(CONFIG_LEDS_TRIGGER_TIMER)	+= ledtrig-timer.o
- obj-$(CONFIG_LEDS_TRIGGER_IDE_DISK)	+= ledtrig-ide-disk.o
-+obj-$(CONFIG_LEDS_TRIGGER_SATA_DISK)	+= ledtrig-sata-disk.o
- obj-$(CONFIG_LEDS_TRIGGER_HEARTBEAT)	+= ledtrig-heartbeat.o
- obj-$(CONFIG_LEDS_TRIGGER_BACKLIGHT)	+= ledtrig-backlight.o
- obj-$(CONFIG_LEDS_TRIGGER_GPIO)		+= ledtrig-gpio.o
- obj-$(CONFIG_LEDS_TRIGGER_DEFAULT_ON)	+= ledtrig-default-on.o
-+obj-$(CONFIG_LEDS_TRIGGER_NETDEV)      += ledtrig-netdev.o 
-diff -uNr linux-3.3.6/include/linux/leds.h linux-3.3.6-my/include/linux/leds.h
---- linux-3.3.6/include/linux/leds.h	2012-05-12 19:08:37.000000000 +0200
-+++ linux-3.3.6-my/include/linux/leds.h	2012-05-17 14:03:39.309421591 +0200
-@@ -167,6 +167,12 @@
- #define ledtrig_ide_activity() do {} while(0)
- #endif
++config LEDS_TRIGGER_SATA_DISK
++	bool "LED SATA Disk Trigger"
++	depends on ATA
++	depends on LEDS_TRIGGERS
++	help
+ 	  This allows LEDs to be controlled by IDE disk activity.
+ 	  If unsure, say Y.
  
-+#ifdef CONFIG_LEDS_TRIGGER_SATA_DISK
-+extern void ledtrig_sata_activity(void);
-+#else
-+#define ledtrig_sata_activity() do {} while(0)
-+#endif
+@@ -468,6 +476,13 @@
+ 	  This allows LEDs to be initialised in the ON state.
+ 	  If unsure, say Y.
+ 
++config LEDS_TRIGGER_NETDEV 
++       tristate "LED Netdev Trigger" 
++       depends on LEDS_TRIGGERS 
++       help 
++        This allows LEDs to be controlled by network device activity. 
++        If unsure, say Y. 
 +
- /*
-  * Generic LED platform data for describing LED names and default triggers.
-  */
-diff -uNr linux-3.3.6/include/linux/nsa3xx-hwmon.h linux-3.3.6-my/include/linux/nsa3xx-hwmon.h
---- linux-3.3.6/include/linux/nsa3xx-hwmon.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-3.3.6-my/include/linux/nsa3xx-hwmon.h	2012-05-17 14:03:39.313421688 +0200
-@@ -0,0 +1,21 @@
-+/*
-+ * include/linux/nsa3xx.hwmon.h
-+ *
-+ * Platform data structure for ZyXEL NSA3xx hwmon driver
-+ *
-+ * This file is licensed under the terms of the GNU General Public
-+ * License version 2.  This program is licensed "as is" without any
-+ * warranty of any kind, whether express or implied.
-+ */
-+
-+#ifndef __LINUX_NSA3XX_HWMON_H
-+#define __LINUX_NSA3XX_HWMON_H
-+
-+struct nsa3xx_hwmon_platform_data {
-+	/* GPIO pins */
-+	unsigned act_pin;
-+	unsigned clk_pin;
-+	unsigned data_pin;
-+};
-+
-+#endif /* __LINUX_NSA3XX_HWMON_H */

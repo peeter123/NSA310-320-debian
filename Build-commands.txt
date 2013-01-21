@@ -1,5 +1,9 @@
 #All config
 ARCH=arm make O=out nconfig
 #NSA310 Kernel
-diff -uNr linux-3.3.6 linux-3.3.6-my > patch-3.3.6-nsa310.diff
-ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- make O=out all uImage -j4
+patch --dry-run --no-backup-if-mismatch -p1 -i ../patch-3.3.6-nsa310.diff
+patch -p1 --no-backup-if-mismatch -i ../patch-3.3.6-nsa310.diff
+diff -uNr --exclude=out linux-3.6.2 linux-3.6.2-my > patch-3.6.2-nsa310.diff
+CFLAGS="-march=armv5te -mfloat-abi=soft -marm" ARCH=arm CROSS_COMPILE="ccache arm-linux-gnueabi-" make O=out all uImage -j4
+#SCP Kernel to NSA310
+scp -P 22 out/arch/arm/boot/uImage root@example.com:/boot/uImage
